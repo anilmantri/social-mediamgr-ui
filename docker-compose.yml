@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: smm_ui
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://api:8000}
+    depends_on:
+      - api
+
+  # Reference the backend — assumes social-mediamgr-service is on the same host
+  # Remove this block if running backend separately
+  api:
+    image: social-mediamgr-service:latest
+    container_name: smm_api_ref
+    env_file: ../.env
+
+networks:
+  default:
+    name: social_mediamgr_network
+    external: true
