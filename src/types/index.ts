@@ -24,7 +24,7 @@ export interface DraftContent {
   version_count: number; scheduled_at: string|null; published_at: string|null;
   instagram_post_id: string|null; brand_voice_score: number|null;
   is_calendar_post: boolean; generation_prompt: string|null;
-  current_version: ContentVersion|null; approval_actions: ApprovalAction[];
+  versions?: ContentVersion[]; current_version: ContentVersion|null; approval_actions: ApprovalAction[];
   created_at: string; updated_at: string;
 }
 export interface DraftContentList { items: DraftContent[]; total: number; page: number; page_size: number; has_next: boolean; }
@@ -57,7 +57,7 @@ export interface OptimalSlot { day_of_week: number; day_name: string; hour_of_da
 export interface OptimalTimeSuggestion { workspace_id: string; suggested_slots: OptimalSlot[]; based_on_posts: number; is_reliable: boolean; next_suggested_at: string|null; }
 export interface CalendarDay { date: string; scheduled_posts: ScheduledPost[]; draft_count: number; is_optimal_day: boolean; }
 export interface CalendarMonth { workspace_id: string; year: number; month: number; days: CalendarDay[]; total_scheduled: number; total_published: number; total_failed: number; }
-export interface HealthCheck { status: string; version: string; db: string; }
+export interface HealthCheck { status: string; version: string; db: string; testing_mode?: boolean; }
 
 // ── Auth & Billing ─────────────────────────────────────────────────────────────
 export type PlanTier = "free"|"starter"|"pro"|"agency";

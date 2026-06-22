@@ -16,6 +16,8 @@ import {
   AuthCallbackPage,
   ForgotPasswordPage,
   ResetPasswordPage,
+  VerifyEmailPage,
+  BillingSuccessPage,
 } from "@/pages/auth/AuthPages";
 import { useAuthStore } from "@/stores/auth";
 
@@ -47,6 +49,9 @@ export default function App() {
           <Route path="/auth/callback"   element={<AuthCallbackPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password"  element={<ResetPasswordPage />} />
+          <Route path="/verify-email"    element={<VerifyEmailPage />} />
+          <Route path="/billing/success" element={<BillingSuccessPage />} />
+          <Route path="/billing/cancelled" element={<Navigate to="/billing" replace />} />
 
           {/* Protected app routes */}
           <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
