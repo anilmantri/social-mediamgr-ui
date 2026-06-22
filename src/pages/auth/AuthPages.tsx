@@ -152,3 +152,46 @@ export function ResetPasswordPage() {
     </div>
   );
 }
+
+// ── Verify Email ──────────────────────────────────────────────────────────────
+export function VerifyEmailPage() {
+  const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const token = params.get("token") || "";
+  const [status, setStatus] = useState<"loading"|"success"|"error">("loading");
+
+  useEffect(() => {
+    if (!token) { setStatus("error"); return; }
+    import("@/lib/api").then(({ authApi }) =>
+      authApi.verifyEmail(token)
+        .then(() => { setStatus("success"); setTimeout(() => navigate("/"), 3000); })
+        .catch(() => setStatus("error"))
+    );
+  }, [token]);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-pink-50 flex items-center justify-center p-4">
+      <div className="card p-8 w-full max-w-sm text-center space-y-4">
+        {status === "loading" && <><Loader2 className="w-10 h-10 animate-spin text-violet-500 mx-auto" /><p className="text-gray-600">Verifying your email…</p></>}
+        {status === "success" && <><CheckCircle className="w-12 h-12 text-emerald-500 mx-auto" /><h2 className="text-lg font-semibold text-gray-900">Email verified!</h2><p className="text-sm text-gray-500">Redirecting to dashboard…</p></>}
+        {status === "error"   && <><div className="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center mx-auto"><span className="text-rose-500 text-xl">✕</span></div><h2 className="text-lg font-semibold text-gray-900">Verification failed</h2><p className="text-sm text-gray-500">Link is invalid or expired.</p><button onClick={() => navigate("/")} className="btn-primary w-full">Go to dashboard</button></>}
+      </div>
+    </div>
+  );
+}
+
+// ── Billing Success ───────────────────────────────────────────────────────────
+export function BillingSuccessPage() {
+  const navigate = useNavigate();
+  useEffect(() => { setTimeout(() => navigate("/billing"), 4000); }, []);
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-violet-50 via-white to-pink-50 flex items-center justify-center p-4">
+      <div className="card p-8 w-full max-w-sm text-center space-y-4">
+        <CheckCircle className="w-14 h-14 text-emerald-500 mx-auto" />
+        <h2 className="text-xl font-bold text-gray-900">Payment successful! 🎉</h2>
+        <p className="text-sm text-gray-500">Your plan has been upgraded. Credits are on their way.</p>
+        <p className="text-xs text-gray-400">Redirecting to billing page…</p>
+      </div>
+    </div>
+  );
+}

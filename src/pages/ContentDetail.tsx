@@ -130,7 +130,7 @@ export function ContentDetailPage() {
                 <div className="pt-2 border-t border-gray-100">
                   <p className="text-xs text-gray-400 mb-2 flex items-center gap-1"><Hash className="w-3 h-3" />{activeV.hashtags.length} hashtags</p>
                   <div className="flex flex-wrap gap-1.5">
-                    {activeV.hashtags.map(h => <span key={h} className="px-2 py-0.5 bg-violet-50 text-violet-700 rounded-md text-xs font-medium">#{h}</span>)}
+                    {activeV.hashtags.map((h: string) => <span key={h} className="px-2 py-0.5 bg-violet-50 text-violet-700 rounded-md text-xs font-medium">#{h}</span>)}
                   </div>
                 </div>
               )}
@@ -174,7 +174,7 @@ export function ContentDetailPage() {
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Details</p>
             {[
               ["Format", contentTypeLabels[draft.content_type]],
-              activeV?.tone ? ["Tone", `${toneConfig[activeV.tone]?.emoji} ${toneConfig[activeV.tone]?.label}`] : null,
+              activeV?.tone ? ["Tone", `${toneConfig[activeV.tone as import("@/types").ToneType]?.emoji} ${toneConfig[activeV.tone as import("@/types").ToneType]?.label}`] : null,
               ["Versions", String(draft.version_count)],
               ["Created", fmt.date(draft.created_at)],
               draft.scheduled_at ? ["Scheduled", fmt.datetime(draft.scheduled_at)] : null,
@@ -191,7 +191,7 @@ export function ContentDetailPage() {
             <div className="card p-4 space-y-2">
               <p className="text-xs font-semibold text-gray-500 uppercase flex items-center gap-1"><History className="w-3.5 h-3.5" /> Version history</p>
               <div className="flex flex-wrap gap-1.5">
-                {versions.map((v, i) => <VersionPill key={v.id} v={v} active={i === (vIdx ?? versions.length - 1)} onClick={() => setVIdx(i)} />)}
+                {versions.map((v: import("@/types").ContentVersion, i: number) => <VersionPill key={v.id} v={v} active={i === (vIdx ?? versions.length - 1)} onClick={() => setVIdx(i)} />)}
               </div>
             </div>
           )}

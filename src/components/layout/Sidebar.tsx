@@ -1,8 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { LayoutDashboard, Sparkles, Calendar, BarChart2, Settings, Instagram, ChevronLeft, ChevronRight, CreditCard, LogOut, Zap } from "lucide-react";
+import { LayoutDashboard, Sparkles, Calendar, BarChart2, Settings, Instagram, ChevronLeft, ChevronRight, CreditCard, LogOut, Zap, Shield } from "lucide-react";
 import { useAppStore } from "@/stores/app";
 import { useAuthStore } from "@/stores/auth";
-import { Shield } from "lucide-react";
 import { useHealth } from "@/hooks";
 import { authApi } from "@/lib/api";
 import { cn } from "@/lib/utils";
